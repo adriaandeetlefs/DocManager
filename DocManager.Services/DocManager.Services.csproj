@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.12.0" />
+    <PackageReference Include="Azure.Storage.Common" Version="12.11.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DocManager.DAL\DocManager.DAL.csproj" />
+    <ProjectReference Include="..\DocManager.Helpers\DocManager.Helpers.csproj" />
+    <ProjectReference Include="..\DocManager.Models\DocManager.Models.csproj" />
+  </ItemGroup>
+
+</Project>
