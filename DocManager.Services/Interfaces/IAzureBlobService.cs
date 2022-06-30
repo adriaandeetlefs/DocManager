@@ -11,6 +11,7 @@ namespace DocManager.Services.Interfaces
 {
     public interface IAzureBlobService
     {
+        // !Feedback: use camel casing not pascal casing for props
         Task<BlobDownloadResult> GetBlobAsync(string FileName);
         Task<byte[]> GetBlob(string FileName);
         Task<IEnumerable<string>> ListBlobsAsync();

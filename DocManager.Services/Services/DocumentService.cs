@@ -31,6 +31,7 @@ namespace DocManager.Services.Services
         #region Public Methods
         public async Task<byte[]> DownloadDocument(string FileName)
         {
+             // !Feedback: use FirstorDefault
             var documentExists = _unitOfWork.Documents.All().Result.Where(x => x.FileName == FileName).FirstOrDefault();
 
             if (documentExists == null)
@@ -42,6 +43,7 @@ namespace DocManager.Services.Services
 
         public Task<List<DocumentModel>> GetDocuments()
         {
+              // !Feedback: use var
             List<DocumentModel> documents = new List<DocumentModel>();
 
             //Query local database for the files uploaded
