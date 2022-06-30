@@ -30,6 +30,7 @@ namespace DocManager.Services.Services
         #endregion
 
         #region Public Methods
+          // !Feedback: no awaits code will run synchronously
         public async Task<BlobDownloadResult> GetBlobAsync(string FileName)
         {
             var containerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
@@ -51,7 +52,7 @@ namespace DocManager.Services.Services
                 containerClient.Create();
 
             var blobClient = containerClient.GetBlobClient(FileName);
-
+            // !Feedback: simplify using
             await using (MemoryStream memoryStream = new MemoryStream())
             {
                 blobClient.DownloadTo(memoryStream);

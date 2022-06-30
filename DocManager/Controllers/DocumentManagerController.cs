@@ -5,6 +5,7 @@ using DocManager.Models;
 using DocManager.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+ // !Feedback: remove unused imports
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace DocManager.Controllers
     public class DocumentManagerController : ControllerBase
     {
         #region Properties and Variables
-
+        // !Feedback: _logger and_ubnitofwork uneccessary as they are not used
         private readonly ILogger<DocumentManagerController> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDocumentService _documentService;
@@ -37,7 +38,7 @@ namespace DocManager.Controllers
         #endregion
 
         #region Endpoints
-
+         // !Feedback: use rest standards (verbs describe operation)
         [HttpPost("uploadfile")]
         public async Task<IActionResult> CreateDocument(DocumentModel document)
         {
@@ -46,7 +47,7 @@ namespace DocManager.Controllers
 
             return new JsonResult("Something went wrong with the upload") { StatusCode = 500 };
         }
-
+         // !Feedback: use rest standards (verbs describe operation)
         [HttpGet("{fileName}")]
         public async Task<IActionResult> GetDocumentByName(string fileName)
         {
@@ -55,13 +56,13 @@ namespace DocManager.Controllers
                 return NotFound();
             return new FileContentResult(data, "application/octet-stream") { FileDownloadName = fileName };
         }
-
+         // !Feedback: use rest standards (verbs describe operation)
         [HttpGet("listalluploaded")]
         public async Task<IActionResult> ListAllUploadedDocuments()
         {
             return Ok(await _documentService.GetDocuments());
         }
-
+         // !Feedback: use rest standards (verbs describe operation)
         [HttpDelete("deletealluploaded")]
         public async Task<IActionResult> DeleteAllUploadedDocuments()
         {

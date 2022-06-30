@@ -2,11 +2,13 @@
 using DocManager.Models;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace DocManager.Client
 {
     class Program
     {
+        // !Feedback: Rather use DI for dependencies
         private static APIHelper apiHelper { get; set; }
         static void Main(string[] args)
         {
@@ -25,12 +27,14 @@ namespace DocManager.Client
             Console.WriteLine("2. Download Document");
             Console.WriteLine("3. Exit");
             Console.WriteLine("");
+            // Feedback *1
+            //BasicDecisionMaker()
         }
 
+        // Feedback *1: Move calls to this method inside ShowOptions
         private static void BasicDecisionMaker()
         {
             var input = Console.ReadLine();
-
             switch (input)
             {
                 case "1":
@@ -44,6 +48,7 @@ namespace DocManager.Client
             }
 
             ShowOptions();
+            // Feedback *1
             BasicDecisionMaker();
         }
 
@@ -57,25 +62,31 @@ namespace DocManager.Client
                         Console.WriteLine("To upload a document please type in the absolute path of the file and continue.");
                         var input = Console.ReadLine();
                         /* Read the File Contents and populate model to send to api */
+                        // !Feedback: Opinionated : use var
                         Tuple<bool, string> result = await apiHelper.UploadDocument(input);
-
+                        // !Feedback: Opinionated : use {} for if or replace with ternary operation
                         if (result.Item1)
                             Console.WriteLine("File Uploaded successfully");
                         else
                             Console.WriteLine("File Upload was unsuccessful");
 
                         ShowOptions();
+                        // Feedback *1
                         BasicDecisionMaker();
                         break;
                     case "2":
                         // First list the documents that are available to download
+                         // !Feedback: Opinionated : use var
                         Tuple<bool,List<DocumentModel>> docListResult = await apiHelper.GetDocumentList();
 
                         if (docListResult.Item1)
                         {
                             Console.WriteLine("List of all documents available to download:");
+                             // !Feedback: Opinionated : use string.Empty
                             Console.WriteLine("");
+                             // !Feedback: Opinionated : use {}
                             foreach (var doc in docListResult.Item2)
+                                 // !Feedback: use string interpolation instead
                                 Console.WriteLine("" + doc.FileName + "");
 
                             Console.WriteLine("");
@@ -91,6 +102,7 @@ namespace DocManager.Client
                                 {
                                     Console.WriteLine("Document Successfully downloaded");
                                     ShowOptions();
+                                    // Feedback *1
                                     BasicDecisionMaker();
 
                                 }
@@ -98,6 +110,7 @@ namespace DocManager.Client
                                 {
                                     Console.WriteLine("Document could not be downloaded");
                                     ShowOptions();
+                                    // Feedback *1
                                     BasicDecisionMaker();
                                 }
                             }
@@ -106,6 +119,7 @@ namespace DocManager.Client
                             Console.WriteLine("Retrieval of document listing failed");
 
                         ShowOptions();
+                        // Feedback *1
                         BasicDecisionMaker();
                         break;
                     case "3":
@@ -115,10 +129,12 @@ namespace DocManager.Client
             }
             catch (Exception ex)
             {
+                // !Feedback: use string interpolation instead
                 Console.WriteLine("Something went wrong: "+ex.Message);
                 Console.WriteLine("Please try again...");
                 Console.WriteLine("");
                 ShowOptions();
+                // Feedback *1
                 BasicDecisionMaker();
             }
         }
